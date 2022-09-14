@@ -10,9 +10,6 @@ var port_number = server.listen(process.env.PORT || 5000);
 
 
 app.use(express.static('../theme/', {index: 'index.html'}));
-app.get('*',function(req,res){
-	res.sendFile(path.join(__dirname+'/theme/index.html'));
-  });
 
 io.on("connection", function(socket){
 	socket.on("sender-join",function(data){
