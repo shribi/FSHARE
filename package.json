@@ -1,0 +1,19 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "Its a project",
+  "main": "index.js",
+    "scripts": {
+      "heroku-postbuild": "cd theme && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+      "start": "node server.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shribi",
+  "license": "ISC",
+  "dependencies": {
+    "connect": "^3.7.0",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "socket.io": "^4.5.2"
+  }
+}
