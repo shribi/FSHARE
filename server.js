@@ -11,7 +11,7 @@ var port_number = server.listen(process.env.PORT || 5000);
 
 app.use(express.static(path.join(__dirname+"/theme")));
 app.get('*',function(req,res){
-	res.sendFile(path.join(__dirname+'/theme/home.html'));
+	res.sendFile(path.join(__dirname+'/theme/index.html'));
   });
 
 io.on("connection", function(socket){
