@@ -1,4 +1,4 @@
-var port = Number(process.env.PORT|| 5000);
+var port = process.env.PORT|| 5000;
 const express = require("express");
 const path = require("path");
 
