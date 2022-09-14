@@ -2,46 +2,204 @@
 <html lang="en-us">
 
 <head>
-    <style>
-        .send{
-            align-items: center;
-  appearance: none;
-  background-image: radial-gradient(100% 100% at 100% 0, #2c43f0 0, #000000 100%);
-  border: 0;
-  border-radius: 6px;
-  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
-  box-sizing: border-box;
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+
+.frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  margin-top: -200px;
+  margin-left: -200px;
+  border-radius: 2px;
+  box-shadow: 1px 2px 10px 0px rgba(0,0,0,0.3);
+  background: #3A92AF;
+  background: -webkit-linear-gradient(bottom left, #3A92AF 0%, #258dee 100%);
+  background: -moz-linear-gradient(bottom left, #3A92AF 0%, #5CA05A 100%);
+  background: -o-linear-gradient(bottom left, #3A92AF 0%, #5CA05A 100%);
+  background: linear-gradient(to top right, #1600cc 0%, #000000 100%); 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3A92AF', endColorstr='#5CA05A',GradientType=1 );
   color: #fff;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 100px;
-  width: 50%;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: x-large;
-  font-weight: bold;
-        }
-
-
-.send:active {
-  box-shadow: #3c4fe0 0 3px 7px inset;
-  transform: translateY(2px);
+	font-family: 'Open Sans', Helvetica, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
-    </style>
+
+.center {
+  position: absolute;
+	width: 300px;
+	height: 300px;
+  top: 70px;
+  left: 50px;
+	background: #fff;
+	box-shadow: 8px 10px 15px 0 rgba(0,0,0,0.2);
+	border-radius: 3px;
+}
+
+.title {
+	font-size: 16px;
+	color: #676767;
+	line-height: 50px;
+	height: 50px;
+	border-bottom: 1px solid #D8D8D8;
+	text-align: center;
+}
+
+
+.dropzone {
+	position: absolute;
+	z-index: 1;
+	box-sizing: border-box;
+	display: table;
+	table-layout: fixed;
+	width: 200px;
+	height: 200px;
+	left: 50px;
+	border-radius: 5px;
+	text-align: center;
+	overflow: hidden;
+}
+	
+	.dropzone.is-dragover {
+		border-color: #666;
+		background: #eee;
+	}
+	
+	.content {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	
+	.upload {
+		margin: 8px 0 0 2px;
+	}
+	
+	.filename {
+		display: block;
+		color: #676767;
+		font-size: 15px;
+		line-height: 15px;
+	}
+	
+	.input {
+		position: absolute;
+		width:50%;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0;
+	}
+	
+
+.upload-btn {
+	position: absolute;
+	width: 140px;
+	height: 40px;
+	z-index: 5;
+	left: 80px;
+	bottom:35px;
+	background: #6ECE3B;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 40px;
+	font-size: 14px;
+	box-shadow: 0 2px 0 0 #498C25;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+	.upload-btn:hover {
+		box-shadow: 0 2px 0 0 #498C25, 0 2px 10px 0 #6ECE3B;
+	}
+
+
+.bar {
+	position: absolute;
+	z-index: 1;
+	width: 300px;
+	height: 3px;
+	top: 49px;
+	left: 0;
+	background: #6ECE3B;
+	transition: all 3s ease-out;
+	transform: scaleX(0);
+	transform-origin: 0 0;
+}
+	
+	.bar.active {
+		transform: scaleX(1) translate3d(0,0,0);
+	}
+
+
+.syncing {
+	position: absolute;
+	top: 109px;
+	left: 134px;
+	opacity: 0;
+}
+	
+	.syncing.active {
+		animation: syncing 3.2s ease-in-out;
+	}
+
+
+.done {
+	position: absolute;
+	top: 112px;
+	left: 132px;
+	opacity: 0;
+}
+	
+.done .active {
+		animation: done .5s ease-in 3.2s;
+		animation-fill-mode: both;
+}
+
+.progress1 {
+	padding: 30px;
+	text-align: center;
+	align-content: center;
+	height: 10rem;
+	font-size: 50px;
+	color: #222;
+	font-family: "Montserrat";
+	}
+
+.item {
+	width: 100%;
+	min-width: 200px;
+	border: 1px solid #eee;
+	box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.05);
+}
+
+@keyframes syncing {
+	0% {
+		transform: rotate(0deg);
+	}
+	10% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 1;
+	}
+	100% {
+		transform: rotate(360deg);
+		opacity: 0;
+	}
+}
+
+@keyframes done {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+</style>
 	<meta charset="utf-8">
 	<title>FSHARE</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -52,6 +210,8 @@
 	<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
 	<!-- themefy-icon -->
 	<link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+	<!--Favicon-->
+	<link rel="icon" href="images/favicon.png" type="image/x-icon">
 	<!-- fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 	<!-- Main Stylesheet -->
@@ -63,28 +223,52 @@
 	<header class="banner overlay bg-cover" data-background="images/bg.jpg">
 		<nav class="navbar navbar-expand-md navbar-dark">
 			<div class="container">
-				<a class="navbar-brand px-2" style="position: absolute; left: 100px; top: 20px; font-weight: bolder; font-size: 50px;" href="home.html">FSHARE</a>
+				<a class="navbar-brand px-2" style="position: absolute; left: 45%; top: 10px; font-weight: bold; font-size: xx-large;" href="home.html">FSHARE</a>
 			</div>
 		</nav><br><br><br>
 		<!-- banner -->
+				
 		<div class="container section">
 			<div class="row">
-				<br><br><br><br><br><br>
+				<div class="col-lg-8 text-center mx-auto">
+					<button class="upload-btn" id="getcode" style="left: 25%; top: 20px; height: 70px; font-size: xx-large; font-weight: bold; width: 50%; border: #6ECE3B; color:white; ">GET CODE</button>
+						<input hidden id="search" placeholder="Enter Code"><br><br>
+					</div>
 				</div>
 			</div>
 		</div>
 		<!-- /banner -->
 	</header>
 	<!-- /header -->
-    <br><br><br>
-    <div class="col-lg-8 text-center mx-auto">
-        <button class = "send" onclick="window.location.href='sender.html'">SEND FILES</button> 
-    </div>
-    <br><br><br>
-    <div class="col-lg-8 text-center mx-auto">
-        <button class = "send" onclick="window.location.href='receiver.html'">RECEIVE FILES</button> 
-    </div>
-</div>
+
+	<!-- topics -->
+	<section class="section">
+		<div class="container">
+			<div class="row justify-content-center"><br/><br/><br/><br/><br/><br/>
+				<!-- topic-item -->
+				<div style = "float: right;" class="col-lg-4 col-sm-6 mb-4"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+					<div class="frame" id = "frame" style="display:none ;">
+						<p style = " text-align:center; font-size: 30px; color: white; font-weight: bold; padding-top:10px; ">SHARE</p>
+						<div class="center">
+							<div class="bar"></div>
+								<div class="title">Drop file to upload</div>
+									<div class="dropzone">
+									<div class="content">
+									<img src="https://100dayscss.com/codepen/upload.svg" class="upload">
+									<br>
+									<span class="filename"></span>
+									<input type="file" id="file-input" class="input">
+								</div>
+							</div>							
+						<button class="upload-btn" id="submit" style="border: #6ECE3B; color:white; ">Share
+							
+						</button>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<script type="text/javascript" src="socket.io/socket.io.js"></script>
 
@@ -94,7 +278,7 @@
 	<!-- match-height JS -->
 	<script src="plugins/match-height/jquery.matchHeight-min.js"></script>
 	<!-- Main Script -->
-	<script src="script.js"></script>
+	<script src="code.js"></script>
 	<script src='https://100dayscss.com/codepen/js/jquery.min.js'></script>  
 	<script src="assets/script.js"></script>
 </body>

@@ -5,11 +5,13 @@ const app = express();
 const server = require("http").createServer(app);
 
 const io = require("socket.io")(server);
-
 var port_number = server.listen(process.env.PORT || 5000);
 
 
-app.use(express.static('../theme/', {index: 'index.html'}));
+app.use(express.static(path.join(__dirname+"/theme")));
+app.get('/',function(req,res){
+	res.sendFile(path.join(__dirname+'/theme/home.html'));
+});
 
 io.on("connection", function(socket){
 	socket.on("sender-join",function(data){
