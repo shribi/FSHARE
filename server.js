@@ -8,7 +8,7 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
 app.use(express.static(path.join(__dirname+"/theme")));
-app.get('/',function(req,res){
+app.get('*',function(req,res){
 	res.sendFile(path.join(__dirname+'/theme/home.html'));
   });
 
