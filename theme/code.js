@@ -24,6 +24,9 @@ $dropzone.on('drag dragstart dragend dragover dragenter dragleave drop', functio
     document.getElementById("getcode").addEventListener("click", function(){
         let joinID = generateID();
         alert("Your Code is : "+joinID);
+		document.querySelector('#getcode').innerHTML = `
+			<button class = "upload-btn" hidden>${joinID}</button>
+		`;
 
         socket.emit("sender-join", {
             uid:joinID
