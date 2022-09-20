@@ -6,7 +6,7 @@ The application is built using the Javascript's framework known as EXPRESS.JS an
 
 How to use??
 -> Download the Git.
--> Open the folder in Microsoft Visual Studio 
+-> Open the folder in Microsoft Visual Studio.
 -> Run the command, "npx nodemon server.js", in the Terminal.
 -> Go to any browser which supports HTML 5.0 such as Microsoft Edge, Google Chrome etc.,
 -> Type the URL- "http://localhost:5000/home.html" in your browser you will be lead to the home page of the app.
